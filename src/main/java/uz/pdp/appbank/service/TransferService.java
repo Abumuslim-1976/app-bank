@@ -32,20 +32,6 @@ public class TransferService {
     OutcomeRepository outcomeRepository;
 
 
-    // ----------- kartani parolini tekshirib unga token qaytaramiz -----------
-//    public ApiResponse card(UUID id, CardLoginDto cardLoginDto) {
-//        Optional<Card> cardOptional = cardRepository.findById(id);
-//        if (!cardOptional.isPresent())
-//            return new ApiResponse("Karta topilmadi", false);
-//
-//        Card card = cardOptional.get();
-//        if (card.getSpecialCode().equals(cardLoginDto.getPassword()) && card.isActive()) {
-//
-//        }
-//
-//    }
-
-
     //    Karta 2 martadan ortiq noto`g`ri parol kiritilsa block holatiga o`tkaziladi (x => sanoq uchun)
     int x = 0;
 
