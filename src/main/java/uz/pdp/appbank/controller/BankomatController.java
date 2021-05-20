@@ -22,7 +22,7 @@ public class BankomatController {
 
 
     @PostMapping("/createATM")
-//    @PreAuthorize(value = "hasRole('BANKOMAT_WORKER')")
+    @PreAuthorize(value = "hasRole('BANKOMAT_WORKER')")
     public HttpEntity<?> createATM(@Valid @RequestBody BankomatDto bankomatDto) {
         ApiResponse bankomat = bankomatService.createBankomat(bankomatDto);
         return ResponseEntity.status(bankomat.isSuccess() ? 201 : 409).body(bankomat);

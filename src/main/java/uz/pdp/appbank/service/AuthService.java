@@ -5,28 +5,21 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.pdp.appbank.entity.Role;
-import uz.pdp.appbank.entity.Staff;
 import uz.pdp.appbank.entity.User;
 import uz.pdp.appbank.entity.enums.RoleName;
 import uz.pdp.appbank.payload.ApiResponse;
 import uz.pdp.appbank.payload.LoginDto;
 import uz.pdp.appbank.payload.RegisterDto;
 import uz.pdp.appbank.repository.RoleRepository;
-import uz.pdp.appbank.repository.StaffRepository;
 import uz.pdp.appbank.repository.UserRepository;
 import uz.pdp.appbank.security.JwtProvider;
 
 import java.util.Collections;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Set;
 
 @Service
 public class AuthService implements UserDetailsService {
@@ -38,8 +31,6 @@ public class AuthService implements UserDetailsService {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
-    StaffRepository staffRepository;
-    @Autowired
     JwtProvider jwtProvider;
     @Autowired
     AuthenticationManager authenticationManager;
@@ -49,31 +40,20 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Staff> staffOptional = staffRepository.findByEmail(username);
-        Optional<User> userOptional = userRepository.findByEmail(username);
-
-        if (staffOptional.isPresent()) return staffOptional.get();
-        if (userOptional.isPresent()) return userOptional.get();
-
-        throw new UsernameNotFoundException(username + " topilmadi");
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username + " topilmadi"));
     }
-
-
-//    public UserDetails loadClientByUsername(String username) throws UsernameNotFoundException {
-//        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username + " topilmadi"));
-//    }
 
 
     // ----------- Registratsiyadan o`tish -----------
     public ApiResponse registerUser(RegisterDto registerDto) {
         try {
-            Staff staff = new Staff();
-            staff.setFirstName(registerDto.getFirstName());
-            staff.setLastName(registerDto.getLastName());
-            staff.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-            staff.setEmail(registerDto.getEmail());
-            staff.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.CARD_WORKER)));
-            staffRepository.save(staff);
+            User user = new User();
+            user.setFirstName(registerDto.getFirstName());
+            user.setLastName(registerDto.getLastName());
+            user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+            user.setEmail(registerDto.getEmail());
+            user.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.CARD_WORKER)));
+            userRepository.save(user);
             return new ApiResponse("Ishchi saqlandi", true);
         } catch (Exception e) {
             return new ApiResponse("Xatolik !!!", false);
@@ -94,6 +74,7 @@ public class AuthService implements UserDetailsService {
             return new ApiResponse("email or password not found", false);
         }
     }
+
 
 
 }

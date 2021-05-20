@@ -24,7 +24,7 @@ public class TransferController {
 
 
     @PostMapping
-//    @PreAuthorize(value = "hasRole('CLIENT')")
+    @PreAuthorize(value = "hasRole('CLIENT')")
     public HttpEntity<?> transfer(@Valid @RequestBody TransferDto transferDto) {
         ApiResponse apiResponse = transferService.transferMoney(transferDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);

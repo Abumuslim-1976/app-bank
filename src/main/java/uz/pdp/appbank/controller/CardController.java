@@ -23,7 +23,7 @@ public class CardController {
 
     //    ---------- userga karta biriktirish -----------
     @PostMapping
-//    @PreAuthorize(value = "hasRole('CARD_WORKER')")
+    @PreAuthorize(value = "hasRole('CARD_WORKER')")
     public HttpEntity<?> createCard(@Valid @RequestBody CardDto cardDto) {
         ApiResponse apiResponse = cardService.createCardToUser(cardDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);

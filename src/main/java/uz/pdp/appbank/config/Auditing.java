@@ -3,7 +3,6 @@ package uz.pdp.appbank.config;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import uz.pdp.appbank.entity.Staff;
 
 import java.util.Optional;
 import java.util.UUID;

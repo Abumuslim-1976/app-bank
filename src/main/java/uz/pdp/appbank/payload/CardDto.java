@@ -14,18 +14,18 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CardDto {
 
-//    @NotNull(message = "Kartani ichiga pul mablag`i joylansin")
+    @NotNull(message = "Kartani ichiga pul mablag`i joylansin")
     private double balance;                                                     // kartani ichidagi pul miqdori
 
-//    @NotNull(message = "kartani maxsus raqami bo`lishi kerak")
+    @NotNull(message = "kartani maxsus raqami bo`lishi kerak")
     private String specialNumber;                                               // card ning 16 xonalik maxsus raqami
 
     private String cvvCode;                                                     // 3 xonali cvv kodi
 
-//    @NotNull(message = "kartani maxsus kodi kiritilsin")
+    @NotNull(message = "kartani maxsus kodi kiritilsin")
     private Integer specialCode;                                                 // 4 xonali maxsus kod
 
-//    @NotEmpty(message = "kartani egasi kiritilsin")
+    @NotEmpty(message = "kartani egasi kiritilsin")
     private UUID userId;                                                        // qaysi mijozga tegishli ekanligi
 
 }

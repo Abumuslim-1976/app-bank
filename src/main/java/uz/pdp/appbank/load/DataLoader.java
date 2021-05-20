@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import uz.pdp.appbank.entity.Staff;
+import uz.pdp.appbank.entity.Role;
 import uz.pdp.appbank.entity.User;
 import uz.pdp.appbank.entity.enums.RoleName;
 import uz.pdp.appbank.repository.RoleRepository;
-import uz.pdp.appbank.repository.StaffRepository;
 import uz.pdp.appbank.repository.UserRepository;
 
 import java.util.Collections;
@@ -21,8 +20,6 @@ public class DataLoader implements CommandLineRunner {
     PasswordEncoder passwordEncoder;
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    StaffRepository staffRepository;
     @Autowired
     UserRepository userRepository;
 
@@ -36,24 +33,32 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         if (initialMode.equals("always")) {
-            Staff staff = new Staff();
-            staff.setFirstName("Akbarov");
-            staff.setLastName("Islom");
-            staff.setPassword(passwordEncoder.encode("1234"));
-            staff.setEmail("akbarjon@gmail.com");
-            staff.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.DIRECTOR)));
-            staffRepository.save(staff);
 
-            User user = new User();
-            user.setFirstName("Ismatov");
-            user.setLastName("Nurali");
-            user.setPassword(passwordEncoder.encode("222333"));
-            user.setEmail("nurali123@gmail.com");
-            user.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.CLIENT)));
-            userRepository.save(user);
+            roleRepository.save(new Role(
+                    RoleName.DIRECTOR
+            ));
+
+            roleRepository.save(new Role(
+                    RoleName.CLIENT
+            ));
+
+            userRepository.save(new User(
+                    "Akbarov",
+                    "Islom",
+                    passwordEncoder.encode("1234"),
+                    "akbarjon@gmail.com",
+                    Collections.singleton(roleRepository.findByRoleName(RoleName.DIRECTOR))
+            ));
+
+            userRepository.save(new User(
+                    "Ismatov",
+                    "Nurali",
+                    passwordEncoder.encode("222333"),
+                    "nurali123@gmail.com",
+                    Collections.singleton(roleRepository.findByRoleName(RoleName.CLIENT))
+            ));
+
         }
-
-
 
     }
 
