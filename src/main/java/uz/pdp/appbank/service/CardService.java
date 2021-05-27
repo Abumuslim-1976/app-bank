@@ -50,19 +50,6 @@ public class CardService {
     }
 
 
-    //    ----------- kartani muddatini uzaytirish -----------
-    public ApiResponse dateProlong(UUID id) {
-        Optional<Card> optionalCard = cardRepository.findById(id);
-        if (!optionalCard.isPresent())
-            return new ApiResponse("Karta topilmadi", false);
-
-        Card card = optionalCard.get();
-        LocalDate localDateCard = card.getLocalDate().plusYears(5);
-        card.setLocalDate(localDateCard);
-        cardRepository.save(card);
-        return new ApiResponse("Kartani muddati uzaytirildi", true);
-    }
-
 
     //    -----------kartani blockdan chiqarish -------------
     public ApiResponse unBlock(UUID id) {

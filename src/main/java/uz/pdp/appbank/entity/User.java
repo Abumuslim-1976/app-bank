@@ -39,7 +39,6 @@ public class User extends AbstractEntity implements UserDetails {
     @ManyToMany
     private Set<Role> roles;
 
-
     private boolean accountNonExpired = true;
 
     private boolean accountNonLocked = true;

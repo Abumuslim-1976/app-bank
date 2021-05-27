@@ -44,7 +44,7 @@ public class Card extends AbstractEntity implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private PlasticType plasticType;                        // plastik turi (HUMO , UZCARD , VISA)
 
-    @OneToOne(optional = false)
+    @ManyToOne
     private User user;                                      // qaysi mijozga tegishli ekanligi
 
     private boolean active = true;                          // kartaning holati

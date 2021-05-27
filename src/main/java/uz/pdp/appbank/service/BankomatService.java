@@ -23,9 +23,9 @@ public class BankomatService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    double hundred = 100_000;              // 100 ming so`mlik kupyura
-    double fifty = 50_000;                 // 50 ming so`mlik kupyura
-    double ten = 10_000;                   // 10 ming so`mlik kupyura
+    int hundred = 100_000;              // 100 ming so`mlik kupyura
+    int fifty = 50_000;                 // 50 ming so`mlik kupyura
+    int ten = 10_000;                   // 10 ming so`mlik kupyura
 
     //    ------------- bankomat create qilish --------------
     public ApiResponse createBankomat(BankomatDto bankomatDto) {
@@ -57,7 +57,7 @@ public class BankomatService {
                     mailMessage.setFrom("noreply@gmail.com");
                     mailMessage.setTo("bankomat2344@gmail.com");
                     mailMessage.setSubject("Bankomatda pul kam qoldi !!!");
-                    mailMessage.setText("Hurmatli bankomatga mas`ul shaxs , bankomatni pul bilan to`ldirib qo`ying");
+                    mailMessage.setText("Hurmatli bankomatga mas`ul shaxs " + bankomat.getId() + " raqamli bankomatni pul bilan to`ldirib qo`ying");
                     javaMailSender.send(mailMessage);
                     return new ApiResponse("Bankka pul to`ldirib qo`yildi", true);
                 } catch (Exception e) {
@@ -75,7 +75,7 @@ public class BankomatService {
     public ApiResponse fillMoneyToBankomat(UUID id, BankomatDto bankomatDto) {
         Optional<Bankomat> bankomatOptional = bankomatRepository.findById(id);
         if (!bankomatOptional.isPresent())
-            return new ApiResponse("Bankomat not found", false);
+            return new ApiResponse("Bankomat topilmadi", false);
 
         Bankomat bankomat = bankomatOptional.get();
         double a = bankomatDto.getOneHundredThousandCount();
