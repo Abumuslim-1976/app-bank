@@ -15,7 +15,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -36,16 +35,17 @@ public class Card extends AbstractEntity implements UserDetails {
 
     private String cvvCode;                                 // 3 xonali cvv kodi
 
+    @Column(nullable = false)
     private LocalDate localDate;                            // card ni amal qilish muddati
+
+    @Column(nullable = false)
+    private String username;                                // card ning usernamesi
 
     @Column(nullable = false)
     private Integer specialCode;                             // 4 xonali maxsus kod
 
     @Enumerated(value = EnumType.STRING)
     private PlasticType plasticType;                        // plastik turi (HUMO , UZCARD , VISA)
-
-    @ManyToOne
-    private User user;                                      // qaysi mijozga tegishli ekanligi
 
     private boolean active = true;                          // kartaning holati
 
@@ -73,7 +73,7 @@ public class Card extends AbstractEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.username;
     }
 
     @Override
