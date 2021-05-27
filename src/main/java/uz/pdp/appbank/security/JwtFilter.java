@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import uz.pdp.appbank.service.AuthService;
@@ -23,6 +24,8 @@ public class JwtFilter extends OncePerRequestFilter {
     JwtProvider jwtProvider;
     @Autowired
     AuthService authService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -38,6 +41,23 @@ public class JwtFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
+        } else if (token != null && token.startsWith("Basic")) {
+
+            String baseToken = token.substring(6);
+            byte[] decode = Base64
+                    .getDecoder()
+                    .decode(baseToken);
+            String variable = new String(decode, StandardCharsets.UTF_8);
+            String[] split = variable.split(":");
+            String username = split[0];
+            String code = split[1];
+            UserDetails userDetails = authService.loadCardBySpecialNumber(username);
+            if (passwordEncoder.matches(code, userDetails.getPassword())) {
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

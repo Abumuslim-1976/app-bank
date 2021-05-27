@@ -4,12 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import uz.pdp.appbank.entity.enums.BankName;
 import uz.pdp.appbank.entity.enums.PlasticType;
 import uz.pdp.appbank.entity.template.AbstractEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,8 +23,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
-public class Card extends AbstractEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class Card extends AbstractEntity implements UserDetails {
 
     private double balance;                                 // karta ichidagi pul
 
@@ -43,4 +49,50 @@ public class Card extends AbstractEntity {
 
     private boolean active = true;                          // kartaning holati
 
+    @ManyToOne
+    private Role role;
+
+    private boolean accountNonExpired = true;
+
+    private boolean accountNonLocked = true;
+
+    private boolean credentialsNonExpired = true;
+
+    private boolean enabled = false;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(role);
+    }
+
+    @Override
+    public String getPassword() {
+        return this.specialCode.toString();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 }

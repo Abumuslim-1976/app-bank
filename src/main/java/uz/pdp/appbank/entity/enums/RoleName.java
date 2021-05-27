@@ -4,5 +4,6 @@ public enum RoleName {
     DIRECTOR,
     CARD_WORKER,
     BANKOMAT_WORKER,
-    CLIENT
+    CLIENT,
+    CARD
 }

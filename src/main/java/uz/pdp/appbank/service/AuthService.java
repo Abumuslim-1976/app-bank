@@ -15,6 +15,7 @@ import uz.pdp.appbank.entity.enums.RoleName;
 import uz.pdp.appbank.payload.ApiResponse;
 import uz.pdp.appbank.payload.LoginDto;
 import uz.pdp.appbank.payload.RegisterDto;
+import uz.pdp.appbank.repository.CardRepository;
 import uz.pdp.appbank.repository.RoleRepository;
 import uz.pdp.appbank.repository.UserRepository;
 import uz.pdp.appbank.security.JwtProvider;
@@ -26,6 +27,8 @@ public class AuthService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CardRepository cardRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -41,6 +44,10 @@ public class AuthService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username + " topilmadi"));
+    }
+
+    public UserDetails loadCardBySpecialNumber(String specialNumber) throws UsernameNotFoundException {
+        return cardRepository.findBySpecialNumber(specialNumber).orElseThrow(() -> new UsernameNotFoundException(specialNumber + " topilmadi"));
     }
 
 
