@@ -38,7 +38,7 @@ public class BankomatService {
         bankomat.setFiftyThousandCount(bankomatDto.getFiftyThousandCount());
         bankomat.setTenThousandCount(bankomatDto.getTenThousandCount());
 
-        Double sum = bankomatDto.getOneHundredThousandCount() * hundred +
+        Integer sum = bankomatDto.getOneHundredThousandCount() * hundred +
                 bankomatDto.getFiftyThousandCount() * fifty + bankomatDto.getTenThousandCount() * ten;
 
         bankomat.setReadyMoney(sum);
@@ -78,15 +78,15 @@ public class BankomatService {
             return new ApiResponse("Bankomat topilmadi", false);
 
         Bankomat bankomat = bankomatOptional.get();
-        double a = bankomatDto.getOneHundredThousandCount();
-        double b = bankomatDto.getFiftyThousandCount();
-        double c = bankomatDto.getTenThousandCount();
+        Integer a = bankomatDto.getOneHundredThousandCount();
+        Integer b = bankomatDto.getFiftyThousandCount();
+        Integer c = bankomatDto.getTenThousandCount();
 
         bankomat.setOneHundredThousandCount(bankomat.getOneHundredThousandCount() + a);
         bankomat.setFiftyThousandCount(bankomat.getFiftyThousandCount() + b);
         bankomat.setTenThousandCount(bankomat.getTenThousandCount() + c);
 
-        Double sum = a * hundred + b * fifty + c * ten;
+        Integer sum = a * hundred + b * fifty + c * ten;
 
         bankomat.setReadyMoney(bankomat.getReadyMoney() + sum);
         bankomatRepository.save(bankomat);

@@ -5,5 +5,6 @@ import uz.pdp.appbank.entity.Bankomat;
 
 import java.util.UUID;
 
-public interface BankomatRepository extends JpaRepository<Bankomat,UUID> {
+public interface BankomatRepository extends JpaRepository<Bankomat,UUID>{
+
 }

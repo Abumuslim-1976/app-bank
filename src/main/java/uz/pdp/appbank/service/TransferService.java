@@ -85,7 +85,7 @@ public class TransferService {
                     return new ApiResponse("Bankomatdan 10 ming so`mlik kupyuradan kichik kupyura chiqarilmaydi", false);
 
                 // client kiritgan pul miqdori
-                double amount = transferDto.getAmount();
+                int amount = transferDto.getAmount();
                 double commission = amount * 0.01;
                 double amountWithCommission = amount + commission;
 
@@ -112,8 +112,8 @@ public class TransferService {
 
 
                 // bankomatni ichidan clientga pul chiqarib berish
-                double readyMoney = bankomat.getReadyMoney();
-                double minusReadyMoney = readyMoney - amount;
+                int readyMoney = bankomat.getReadyMoney();
+                int minusReadyMoney = readyMoney - amount;
                 bankomat.setReadyMoney(minusReadyMoney);
 
                 double a = Math.floor(amount / 100_000);            // 100 minglik nechtaligi
@@ -141,7 +141,6 @@ public class TransferService {
                 income.setOneHundredThousand(a);
                 income.setFiftyThousand(b);
                 income.setTenThousand(c);
-                income.setToUser(card.getUser());
                 incomeRepository.save(income);
 
                 Outcome outcome = new Outcome();

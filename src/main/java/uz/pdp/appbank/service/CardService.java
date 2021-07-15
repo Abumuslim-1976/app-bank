@@ -31,10 +31,6 @@ public class CardService {
 
     //    ---------- userga karta biriktirish -----------
     public ApiResponse createCardToUser(CardDto cardDto) {
-        Optional<User> optionalUser = userRepository.findById(cardDto.getUserId());
-        if (!optionalUser.isPresent())
-            return new ApiResponse("Mijoz topilmadi", false);
-
         LocalDate localDate = LocalDate.now().plusYears(5);
 
         Card card = new Card();
@@ -44,7 +40,6 @@ public class CardService {
         card.setLocalDate(localDate);                                   // kartani amal qilish muddati
         card.setPlasticType(PlasticType.UZCARD);
         card.setBankName(BankName.NBU_BANK);
-        card.setUser(optionalUser.get());
         cardRepository.save(card);
         return new ApiResponse("Karta saqlandi", true);
     }

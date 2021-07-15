@@ -30,15 +30,6 @@ public class CardController {
     }
 
 
-    //    ----------- kartani muddatini uzaytirish -----------
-    @GetMapping("/cardDate/{id}")
-    @PreAuthorize(value = "hasRole('CARD_WORKER')")
-    public HttpEntity<?> cardDateProlong(@Valid @PathVariable UUID id) {
-        ApiResponse apiResponse = cardService.dateProlong(id);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
-    }
-
-
     //    -----------kartani blockdan chiqarish -------------
     @GetMapping("/block/{id}")
     @PreAuthorize(value = "hasRole('CARD_WORKER')")

@@ -18,12 +18,12 @@ public class BankomatDto {
     private long maxMoney;                                                                  // bankamatdan max pul yechish miqdori
 
 //    @NotNull(message = "Bankamatga 100 minglik kupyura kiritib keting")
-    private double oneHundredThousandCount;                                                 // yuz ming so`mlik
+    private Integer oneHundredThousandCount;                                                 // yuz ming so`mlik
 
 //    @NotNull(message = "Bankomatga 50 minglik kupyura kiritib keting")
-    private double fiftyThousandCount;                                                      // ellik ming so`mlik
+    private Integer fiftyThousandCount;                                                      // ellik ming so`mlik
 
 //    @NotNull(message = "Iltimos 10 minglik kupyura kiriting , chunki bu kupyura ham mijoz uchun zarur")
-    private double tenThousandCount;                                                         // o`n ming so`mlik
+    private Integer tenThousandCount;                                                         // o`n ming so`mlik
 
 }

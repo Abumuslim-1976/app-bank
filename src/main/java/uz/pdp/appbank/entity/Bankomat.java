@@ -25,7 +25,7 @@ public class Bankomat extends AbstractEntity {
     private long maxMoney;                                      // bankamatdan max pul yechish miqdori
 
     @Column(nullable = false)
-    private Double readyMoney;                                     // bankdagi naqd pul miqdori
+    private Integer readyMoney;                                     // bankdagi naqd pul miqdori
 
     private double plasticMoney;                                  // card dan yechib olingan pul saqlanadigan joy
 

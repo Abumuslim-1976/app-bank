@@ -13,7 +13,7 @@ import java.util.UUID;
 public class TransferDto {
 
     @NotNull
-    private double amount;
+    private int amount;
 
     @NotNull
     private UUID bankomatId;
